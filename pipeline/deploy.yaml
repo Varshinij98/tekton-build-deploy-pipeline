@@ -19,16 +19,16 @@ spec:
         #!/usr/bin/env bash
 
         echo "Deploying $(params.IMAGE_URL)"
-        oc login oc.exe login -u kubeadmin -p 75kIh-XSSvx-9zGSm-vPyXn -u=$(params.USERNAME) -p=$(params.PASSWORD)
+        oc login oc.exe login -u kubeadmin -p 75kIh-XSSvx-9zGSm-vPyXn https://api.crc.testing:6443 -u=$(params.USERNAME) -p=$(params.PASSWORD)
         cat <<EOF | oc apply -f -
         apiVersion: argoproj.io/v1alpha1
         kind: Application
         metadata:
           name: app-spring-petclinic
-          namespace: argocd
+          namespace: openshift-gitops
         spec:
           destination:
-            namespace: argocd
+            namespace: openshift-gitops
             server: https://kubernetes.default.svc
           project: default
           source:
